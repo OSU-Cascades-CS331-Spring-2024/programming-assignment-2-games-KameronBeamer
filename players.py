@@ -1,6 +1,8 @@
 '''
     Defines Player class, and subclasses Human and Minimax Player.
 '''
+from minimax import Minimax
+import time
 
 class Player:
     def __init__(self, symbol):
@@ -17,6 +19,7 @@ class Player:
 
 class HumanPlayer(Player):
     def __init__(self, symbol):
+        self.minimax = Minimax()
         Player.__init__(self, symbol)
 
     def clone(self):
@@ -33,11 +36,20 @@ class MinimaxPlayer(Player):
 
     def __init__(self, symbol):
         Player.__init__(self, symbol)
+        self.minimax = Minimax()
         if symbol == 'X':
             self.oppSym = 'O'
         else:
             self.oppSym = 'X'
-       
+
+    def get_move(self, board):
+        start = time.time()
+        move = self.minimax.minimax(board, 2, True, self.symbol, self.oppSym)[0]
+        end = time.time()
+        print(end - start)
+        return move
+
+
         
 
 
